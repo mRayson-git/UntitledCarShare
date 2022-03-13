@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'UntitledCarShare';
+  isOpen: boolean = true;
+
+  ngOnInit(): void {
+    if (window.innerWidth < 768) this.isOpen = false;
+    console.log(this.isOpen);
+  }
 }
