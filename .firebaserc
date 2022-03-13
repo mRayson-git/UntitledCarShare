@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "untitledcarshare": {
+      "hosting": {
+        "UntitledCarShare": [
+          "untitledcarshare"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "untitledcarshare"
+  }
+}
