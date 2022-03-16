@@ -1,5 +1,24 @@
-<mat-toolbar color="primary">
-    <span>UntitledCarShare</span>
-    <span class="basic-spacer"></span>
-    <mat-icon>account_circle</mat-icon>
+<mat-toolbar color="primary" (window:resize)="onResize($event)">
+    <mat-toolbar-row>
+        <span (click)="route('')">UntitledCarShare</span>
+        <span class="basic-spacer"></span>
+        <!-- If large screen: Align buttons on right side -->
+        <span *ngIf="!isMobile">
+            <button *ngFor="let button of navButtons" mat-button (click)="route(button.route)">
+                <mat-icon>{{button.icon}}</mat-icon>
+                {{button.text}}
+            </button>
+        </span>
+        <button *ngIf="isMobile" mat-button (click)="route(navButtons[2].route)">
+            <mat-icon>{{navButtons[2].icon}}</mat-icon>
+            {{navButtons[2].text}}
+        </button>
+    </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="isMobile">
+        <button *ngFor="let button of navButtons | slice:0:2" mat-raised-button (click)="route(button.route)">
+            <mat-icon>{{button.icon}}</mat-icon>
+            {{button.text}}
+        </button>
+    </mat-toolbar-row>
+    
 </mat-toolbar>
