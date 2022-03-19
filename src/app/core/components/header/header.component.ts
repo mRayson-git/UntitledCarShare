@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { NavButton } from '../../models/nav-button';
 
@@ -9,30 +10,43 @@ import { NavButton } from '../../models/nav-button';
 })
 export class HeaderComponent implements OnInit {
 
-  navButtons: NavButton[] = [];
   isMobile: boolean = false;
 
-  constructor(private router: Router) { }
+  //Auth buttons
+  loginBtn: NavButton = {
+    text: 'Login',
+    icon: 'login',
+    route: '/account/login'
+  }
+  logoutBtn: NavButton = {
+    text: 'Logout',
+    icon: 'logout',
+    route: '/'
+  }
+
+  //Function buttons
+  accountBtn: NavButton = {
+    text: 'Account',
+    icon: 'account_circle',
+    route: '/account/info'
+  }
+  findRideBtn: NavButton = {
+    text: 'Find a ride',
+    icon: 'search',
+    route: '/rides/find'
+  }
+  listRideBtn: NavButton = {
+    text: 'List a ride',
+    icon: 'add_circle',
+    route: '/rides/list'
+  }
+
+
+  constructor(public auth: Auth) { }
 
   ngOnInit(): void {
-    // Create navButtons
-    this.navButtons.push({
-      text: 'List a ride',
-      icon: 'edit',
-      route: 'rides/list'
-    });
-    this.navButtons.push({
-      text: 'Find a ride',
-      icon: 'search',
-      route: 'rides/find'
-    });
-    this.navButtons.push({
-      text: 'Account',
-      icon: 'account_circle',
-      route: 'account/settings'
-    });
     // check window size
-    if (window.innerWidth < 768) this.isMobile = true;
+    this.isMobile = this.isSmallScreen();
   }
 
   onResize(event: any): void {
@@ -44,8 +58,10 @@ export class HeaderComponent implements OnInit {
     return false;
   }
 
-  route(route: string): void {
-    this.router.navigateByUrl(route);
+  logout(): void {
+    this.auth.signOut()
+    .then(result => console.log(`Signed out: ${result}`))
+    .catch(err => console.log(`Error signing out: ${err}`));
   }
 
 }

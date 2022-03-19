@@ -1,24 +1,47 @@
 <mat-toolbar color="primary" (window:resize)="onResize($event)">
-    <mat-toolbar-row>
-        <span (click)="route('')">UntitledCarShare</span>
+    <mat-toolbar-row class="row-emphasis">
+        <span>UntitledCarShare</span>
         <span class="basic-spacer"></span>
-        <!-- If large screen: Align buttons on right side -->
-        <span *ngIf="!isMobile">
-            <button *ngFor="let button of navButtons" mat-button (click)="route(button.route)">
-                <mat-icon>{{button.icon}}</mat-icon>
-                {{button.text}}
+        <!-- is not logged in -->
+        <span *ngIf="!auth.currentUser">
+            <button type="button" mat-button routerLink="{{loginBtn.route}}">
+                <mat-icon>{{loginBtn.icon}}</mat-icon>
+                {{loginBtn.text}}
             </button>
         </span>
-        <button *ngIf="isMobile" mat-button (click)="route(navButtons[2].route)">
-            <mat-icon>{{navButtons[2].icon}}</mat-icon>
-            {{navButtons[2].text}}
+        <!-- is logged in && not mobile-->
+        <span *ngIf="auth.currentUser && auth.currentUser != null && !isMobile">
+            <button type="button" mat-button routerLink="{{findRideBtn.route}}">
+                <mat-icon>{{findRideBtn.icon}}</mat-icon>
+                {{findRideBtn.text}}
+            </button>
+            <button type="button" mat-button routerLink="{{listRideBtn.route}}">
+                <mat-icon>{{listRideBtn.icon}}</mat-icon>
+                {{listRideBtn.text}}
+            </button>
+            <button type="button" mat-button routerLink="{{accountBtn.route}}">
+                <mat-icon>{{accountBtn.icon}}</mat-icon>
+                {{accountBtn.text}}
+            </button>
+        </span>
+        <button type="button" mat-button routerLink="{{logoutBtn.route}}" (click)="logout()" *ngIf="auth.currentUser && auth.currentUser != null">
+            <mat-icon>{{logoutBtn.icon}}</mat-icon>
+            {{logoutBtn.text}}
         </button>
     </mat-toolbar-row>
-    <mat-toolbar-row *ngIf="isMobile">
-        <button *ngFor="let button of navButtons | slice:0:2" mat-raised-button (click)="route(button.route)">
-            <mat-icon>{{button.icon}}</mat-icon>
-            {{button.text}}
+    <!-- if authenticated and on small screen -->
+    <mat-toolbar-row *ngIf="auth.currentUser && auth.currentUser != null && isMobile">
+        <button type="button" mat-button routerLink="{{findRideBtn.route}}">
+            <mat-icon>{{findRideBtn.icon}}</mat-icon>
+            {{findRideBtn.text}}
+        </button>
+        <button type="button" mat-button routerLink="{{listRideBtn.route}}">
+            <mat-icon>{{listRideBtn.icon}}</mat-icon>
+            {{listRideBtn.text}}
+        </button>
+        <button type="button" mat-button routerLink="{{accountBtn.route}}">
+            <mat-icon>{{accountBtn.icon}}</mat-icon>
+            {{accountBtn.text}}
         </button>
     </mat-toolbar-row>
-    
 </mat-toolbar>

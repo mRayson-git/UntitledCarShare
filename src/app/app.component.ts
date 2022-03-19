@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Auth, browserSessionPersistence } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent {
   title = 'UntitledCarShare';
-  isOpen: boolean = true;
 
-  ngOnInit(): void {
-    if (window.innerWidth < 768) this.isOpen = false;
-    console.log(this.isOpen);
+  constructor(private auth: Auth) {
+    this.auth.setPersistence(browserSessionPersistence);
   }
 }
